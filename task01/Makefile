@@ -1,12 +1,11 @@
-.PHONY: build start run clean
+.PHONY: build start run clean tidy
 
 TASK_NAME ?= task01
 
 build:
 	go build -o bin/$(TASK_NAME) cmd/*.go
 
-start:
-	make build
+start: build
 	./bin/$(TASK_NAME)
 
 run:
@@ -14,3 +13,6 @@ run:
 
 clean:
 	rm bin/$(TASK_NAME)
+
+tidy:
+	go mod tidy

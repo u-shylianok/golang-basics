@@ -3,5 +3,5 @@ Golang Basics course tasks
 
 ### Task progress
 
-- [ ] task01
+- [X] task01
 - [ ] task02
