@@ -40,6 +40,7 @@ func main() {
 	n, err := file.WriteBytes(jsonPath, jsonBytes)
 	if err != nil {
 		logrus.WithError(err).WithField("path", jsonPath).Error("failed to write bytes")
+		return
 	}
 	logrus.WithFields(logrus.Fields{
 		"path":          jsonPath,
