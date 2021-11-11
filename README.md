@@ -5,4 +5,4 @@ Golang Basics course tasks
 
 - [X] task01
 - [X] task02
-- [ ] task03
+- [X] task03
