@@ -1,4 +1,4 @@
-.PHONY: build start run clean tidy start-env-all start-args-all start-env-args-override start-env-args-parts start-env-args-parts-override
+.PHONY: build start run clean tidy start-env-all start-args-all start-env-args-override start-env-args-parts start-env-args-parts-override start-err start-panic
 
 TASK_NAME ?= task02
 INPUT_PATH ?= XMLConfig.xml
