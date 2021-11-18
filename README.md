@@ -6,3 +6,4 @@ Golang Basics course tasks
 - [X] task01
 - [X] task02
 - [X] task03
+- [ ] checkout-system
