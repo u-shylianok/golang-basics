@@ -1,8 +1,14 @@
-package task
+package checkout
 
-import "testing"
+import (
+	"testing"
 
-func TestTaskWorkExample(t *testing.T) {
+	"github.com/stretchr/testify/require"
+	"github.com/u-shylianok/golang-basics/checkout-system/pkg/model"
+	"github.com/u-shylianok/golang-basics/checkout-system/pkg/pricing/rule"
+)
+
+func TestCheckout_Total(t *testing.T) {
 	type args struct {
 		SKUs []string
 	}
@@ -35,9 +41,20 @@ func TestTaskWorkExample(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := TaskWorkExample(tt.args.SKUs); got != tt.want {
-				t.Errorf("TaskWorkExample() = %v, want %v", got, tt.want)
+			catalog := model.GetDefaultCatalog()
+			rules := rule.GetDefaultRules()
+
+			co := NewCheckout(catalog, rules)
+
+			for _, sku := range tt.args.SKUs {
+				co.Scan(sku)
+				t.Logf("sku [%s] scanned", sku)
 			}
+
+			t.Logf("\n%#v", co)
+			got, err := co.Total()
+			require.NoError(t, err)
+			require.Equal(t, tt.want, got)
 		})
 	}
 }

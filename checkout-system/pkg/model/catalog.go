@@ -1,12 +1,14 @@
 package model
 
+import "fmt"
+
 type Catalog struct {
-	Products map[string]Product
+	products map[string]Product
 }
 
 func GetDefaultCatalog() Catalog {
 	return Catalog{
-		Products: map[string]Product{
+		products: map[string]Product{
 			"ipd": {
 				SKU:   "ipd",
 				Name:  "Super iPad",
@@ -29,4 +31,12 @@ func GetDefaultCatalog() Catalog {
 			},
 		},
 	}
+}
+
+func (c *Catalog) GetProduct(SKU string) (Product, error) {
+	product, ok := c.products[SKU]
+	if !ok {
+		return product, fmt.Errorf("product is not in the catalog")
+	}
+	return product, nil
 }
