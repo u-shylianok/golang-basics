@@ -2,7 +2,7 @@ package checkout
 
 import (
 	"github.com/u-shylianok/golang-basics/checkout-system/pkg/model"
-	"github.com/u-shylianok/golang-basics/checkout-system/pkg/pricing/rule"
+	"github.com/u-shylianok/golang-basics/checkout-system/pkg/pricing/rules"
 )
 
 type SKUScanner interface {
@@ -12,11 +12,11 @@ type SKUScanner interface {
 
 type Checkout struct {
 	Catalog      model.Catalog
-	PricingRules []rule.Rule
+	PricingRules []rules.DiscountRuler
 	Products     []model.Product
 }
 
-func NewCheckout(catalog model.Catalog, pricingRules []rule.Rule) *Checkout {
+func NewCheckout(catalog model.Catalog, pricingRules []rules.DiscountRuler) *Checkout {
 	return &Checkout{
 		Catalog:      catalog,
 		PricingRules: pricingRules,
@@ -32,7 +32,6 @@ func (c *Checkout) Scan(SKU string) error {
 		return err
 	}
 
-	product.DiscountPrice = product.Price
 	c.Products = append(c.Products, product)
 	return nil
 }
@@ -45,7 +44,7 @@ func (c *Checkout) Total() (int64, error) {
 
 	var total int64
 	for _, product := range c.Products {
-		total += product.DiscountPrice
+		total += product.GetTotalPrice()
 	}
 	return total, nil
 }

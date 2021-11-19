@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 	"github.com/u-shylianok/golang-basics/checkout-system/pkg/model"
-	"github.com/u-shylianok/golang-basics/checkout-system/pkg/pricing/rule"
+	"github.com/u-shylianok/golang-basics/checkout-system/pkg/pricing/rules"
 )
 
 func TestCheckout_Total(t *testing.T) {
@@ -84,7 +84,7 @@ func TestCheckout_Total(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			catalog := model.GetDefaultCatalog()
-			rules := rule.GetDefaultRules()
+			rules := rules.GetDefaultRules()
 
 			co := NewCheckout(catalog, rules)
 
