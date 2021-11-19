@@ -43,9 +43,9 @@ func (p *Product) GetTotalPrice() int64 {
 	return p.total
 }
 
-func (p *Product) String() string {
+func (p Product) String() string {
 	if p.discount == 0 {
-		return fmt.Sprintf("Product: [%s]\nSKU: [%s]\nPrice: [%d]\nTotal: [%d]", p.Name, p.SKU, p.Price, p.total)
+		return fmt.Sprintf("\nProduct: [%s]\nSKU: [%s]\nPrice: [%d]\nTotal: [%d]", p.Name, p.SKU, p.Price, p.total)
 	}
-	return fmt.Sprintf("Product: [%s]\nSKU: [%s]\nPrice: [%d]\nDiscount: [-%d]\nTotal: [%d]", p.Name, p.SKU, p.Price, p.discount, p.total)
+	return fmt.Sprintf("\nProduct: [%s]\nSKU: [%s]\nPrice: [%d]\nDiscount: [-%d]\nTotal: [%d]", p.Name, p.SKU, p.Price, p.discount, p.total)
 }
