@@ -1,19 +1,17 @@
 package model
 
 type Product struct {
-	SKU   string
-	Name  string
-	Price int64
+	SKU           string
+	Name          string
+	Price         int64
+	DiscountPrice int64
 }
 
-func (p Product) ToDiscountProduct(newPrice int64) DiscountProduct {
-	return DiscountProduct{
-		Product: p,
-		Price:   newPrice,
+func NewProduct(sku, name string, price int64) Product {
+	return Product{
+		SKU:           sku,
+		Name:          name,
+		Price:         price,
+		DiscountPrice: price,
 	}
-}
-
-type DiscountProduct struct {
-	Product
-	Price int64
 }
