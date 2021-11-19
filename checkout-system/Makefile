@@ -9,6 +9,9 @@ build:
 start: build
 	PRODUCTS_PATH=$(PRODUCTS_PATH) ./bin/$(TASK_NAME)
 
+start-verbose: build
+	PRODUCTS_PATH=$(PRODUCTS_PATH) ./bin/$(TASK_NAME) -v
+
 run:
 	go run cmd/*.go
 

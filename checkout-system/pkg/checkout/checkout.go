@@ -1,6 +1,8 @@
 package checkout
 
 import (
+	"fmt"
+
 	"github.com/sirupsen/logrus"
 	"github.com/u-shylianok/golang-basics/checkout-system/pkg/model"
 	"github.com/u-shylianok/golang-basics/checkout-system/pkg/pricing/rules"
@@ -39,7 +41,7 @@ func (c *Checkout) Scan(SKU string) error {
 }
 
 func (c *Checkout) Total() (int64, error) {
-	logrus.Info("TOTAL:")
+	fmt.Println("TOTAL:")
 
 	for _, rule := range c.PricingRules {
 		c.Products = rule.GetDiscountProducts(c.Products)
@@ -48,7 +50,7 @@ func (c *Checkout) Total() (int64, error) {
 	var total int64
 	for _, product := range c.Products {
 		total += product.GetTotalPrice()
-		logrus.Info(product)
+		fmt.Println(product)
 	}
 	return total, nil
 }
