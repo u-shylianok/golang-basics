@@ -85,11 +85,18 @@ func (r *EveryFromToRule) GetDiscountProducts(products []model.Product) []model.
 			r.Counter++
 		}
 	}
-	if r.Counter > 0 {
-		for i := range products {
-			if products[i].SKU == r.ToSKU {
-				products[i].DiscountPrice = r.ToPrice
-			}
+	if r.Counter == 0 {
+		return products
+	}
+
+	for i := range products {
+		if r.Counter == 0 {
+			break
+		}
+
+		if products[i].SKU == r.ToSKU {
+			products[i].DiscountPrice = r.ToPrice
+			r.Counter--
 		}
 	}
 	return products
