@@ -7,9 +7,9 @@ import (
 )
 
 type Product struct {
-	SKU      string
-	Name     string
-	Price    int64
+	SKU      string `json:"SKU"`
+	Name     string `json:"name"`
+	Price    int64  `json:"price"`
 	discount int64
 	total    int64
 }
@@ -44,8 +44,16 @@ func (p *Product) GetTotalPrice() int64 {
 }
 
 func (p Product) String() string {
+	price := dollarString(p.Price)
+	total := dollarString(p.GetTotalPrice())
 	if p.discount == 0 {
-		return fmt.Sprintf("\nProduct: [%s]\nSKU: [%s]\nPrice: [%d]\nTotal: [%d]", p.Name, p.SKU, p.Price, p.total)
+		return fmt.Sprintf("\nProduct: %s\nSKU: [%s]\nPrice: %s\nTotal: %s", p.Name, p.SKU, price, total)
 	}
-	return fmt.Sprintf("\nProduct: [%s]\nSKU: [%s]\nPrice: [%d]\nDiscount: [-%d]\nTotal: [%d]", p.Name, p.SKU, p.Price, p.discount, p.total)
+
+	discount := dollarString(p.discount)
+	return fmt.Sprintf("\nProduct: %s\nSKU: %s\nPrice: %s\nDiscount: -%s\nTotal: %s", p.Name, p.SKU, price, discount, total)
+}
+
+func dollarString(price int64) string {
+	return fmt.Sprintf("%.2f$", float64(price)/100)
 }

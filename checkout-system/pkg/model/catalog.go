@@ -1,9 +1,36 @@
 package model
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+
+	"github.com/sirupsen/logrus"
+	"github.com/u-shylianok/golang-basics/checkout-system/pkg/file"
+)
 
 type Catalog struct {
 	products map[string]Product
+}
+
+func LoadCatalog(path string) (Catalog, error) {
+	bytes, err := file.ReadBytes(path)
+	if err != nil {
+		logrus.Error(err)
+		return Catalog{}, err
+	}
+
+	var products []Product
+
+	if err := json.Unmarshal(bytes, &products); err != nil {
+		logrus.WithError(err).Error("failed to unmarshal products from json")
+		return Catalog{}, err
+	}
+
+	productsMap := make(map[string]Product)
+	for _, product := range products {
+		productsMap[product.SKU] = product
+	}
+	return Catalog{productsMap}, nil
 }
 
 func GetDefaultCatalog() Catalog {
@@ -33,8 +60,8 @@ func GetDefaultCatalog() Catalog {
 	}
 }
 
-func (c *Catalog) GetProduct(SKU string) (Product, error) {
-	product, ok := c.products[SKU]
+func (c *Catalog) Get(productSKU string) (Product, error) {
+	product, ok := c.products[productSKU]
 	if !ok {
 		return product, fmt.Errorf("product is not in the catalog")
 	}

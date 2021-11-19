@@ -1,12 +1,13 @@
 .PHONY: build start run clean tidy
 
 TASK_NAME ?= checkout-system
+PRODUCTS_PATH ?= products.json
 
 build:
 	go build -o bin/$(TASK_NAME) cmd/$(TASK_NAME)/*.go
 
 start: build
-	./bin/$(TASK_NAME)
+	PRODUCTS_PATH=$(PRODUCTS_PATH) ./bin/$(TASK_NAME)
 
 run:
 	go run cmd/*.go
