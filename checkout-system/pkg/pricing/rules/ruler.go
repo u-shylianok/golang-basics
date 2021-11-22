@@ -7,7 +7,6 @@ import (
 
 type DiscountRuler interface {
 	GetDiscountProducts(products []model.Product) []model.Product
-	String() string
 }
 
 func GetDefaultRules() []DiscountRuler {

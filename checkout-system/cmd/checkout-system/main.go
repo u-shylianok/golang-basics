@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"os"
 
 	"github.com/sirupsen/logrus"
@@ -12,14 +11,14 @@ import (
 )
 
 func main() {
-	fmt.Println("application started")
+	logrus.Info("application started")
 
 	verbosePrt := flag.Bool("v", false, "verbose mode - shows all logs information")
 	flag.Parse()
 	if verbosePrt != nil && *verbosePrt {
 		logrus.SetLevel(logrus.DebugLevel)
 	} else {
-		logrus.SetLevel(logrus.WarnLevel)
+		logrus.SetLevel(logrus.InfoLevel)
 	}
 
 	productsPath := os.Getenv("PRODUCTS_PATH")
@@ -76,17 +75,18 @@ func main() {
 		CheckoutTest(9, SKUs, catalog, pricingRules)
 	}
 
-	fmt.Println("application closed")
+	logrus.Info("application closed")
 }
 
 func CheckoutTest(testNum int, SKUs []string, catalog model.Catalog, pricingRules []rules.DiscountRuler) {
 
-	fmt.Printf("\n ---------- start test %d ---------- \n", testNum)
+	logrus.WithField("test", testNum).Info("---------- start test ----------")
 	co := checkout.NewCheckout(catalog, pricingRules)
 	for _, sku := range SKUs {
 		co.Scan(sku)
-		fmt.Printf("product [%s] scanned\n", sku)
+		logrus.WithField("sku", sku).Info("product scanned")
 	}
-	co.Total()
-	fmt.Printf(" ---------- end test %d ---------- \n", testNum)
+	total, _ := co.Total()
+	logrus.WithField("total", total).Info("total price")
+	logrus.WithField("test", testNum).Info("---------- end test ----------")
 }

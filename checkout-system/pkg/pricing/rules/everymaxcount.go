@@ -16,7 +16,7 @@ type DiscountEveryMaxCountRule struct {
 }
 
 func (r *DiscountEveryMaxCountRule) GetDiscountProducts(products []model.Product) []model.Product {
-
+	r.Counter.Set(0)
 	for i := range products {
 		if products[i].SKU() == r.FromSKU {
 			r.Counter.Inc()
@@ -30,5 +30,5 @@ func (r *DiscountEveryMaxCountRule) GetDiscountProducts(products []model.Product
 }
 
 func (r DiscountEveryMaxCountRule) String() string {
-	return fmt.Sprintf("every (i == %d) product [%s] set new price = %s", r.MaxCount, r.FromSKU, model.ToDollars(r.ToPrice))
+	return fmt.Sprintf("every (i == %d) product [%s] set new price = %s", r.MaxCount, r.FromSKU, model.DollarsString(r.ToPrice))
 }

@@ -14,6 +14,12 @@ type Product struct {
 	total    int64
 }
 
+type ProductJSON struct {
+	SKU   string `json:"SKU"`
+	Name  string `json:"name"`
+	Price int64  `json:"price"`
+}
+
 func NewProduct(sku, name string, price int64) Product {
 	return Product{
 		sku:   sku,
@@ -50,8 +56,8 @@ func (p *Product) SetDiscount(newPrice int64) {
 		return
 	}
 	logrus.WithFields(logrus.Fields{
-		"total":    ToDollars(newPrice),
-		"discount": ToDollars(-discount),
+		"total":    DollarsString(newPrice),
+		"discount": DollarsString(-discount),
 	}).Info("discount set successfully")
 	p.discount = discount
 	p.total = newPrice
@@ -62,16 +68,16 @@ func (p *Product) Total() int64 {
 }
 
 func (p Product) String() string {
-	price := ToDollars(p.price)
-	total := ToDollars(p.Total())
+	price := DollarsString(p.price)
+	total := DollarsString(p.Total())
 	if p.discount == 0 {
 		return fmt.Sprintf("\nProduct: %s\nSKU: [%s]\nPrice: %s\nTotal: %s", p.name, p.sku, price, total)
 	}
 
-	discount := ToDollars(p.discount)
+	discount := DollarsString(p.discount)
 	return fmt.Sprintf("\nProduct: %s\nSKU: %s\nPrice: %s\nDiscount: -%s\nTotal: %s", p.name, p.sku, price, discount, total)
 }
 
-func ToDollars(price int64) string {
+func DollarsString(price int64) string {
 	return fmt.Sprintf("%.2f$", float64(price)/100)
 }

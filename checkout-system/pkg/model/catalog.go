@@ -19,11 +19,7 @@ func LoadCatalog(path string) (Catalog, error) {
 		return Catalog{}, err
 	}
 
-	var products []struct {
-		SKU   string `json:"SKU"`
-		Name  string `json:"name"`
-		Price int64  `json:"price"`
-	}
+	var products []ProductJSON
 
 	if err := json.Unmarshal(bytes, &products); err != nil {
 		logrus.WithError(err).Error("failed to unmarshal products from json")

@@ -16,7 +16,7 @@ type DiscountOneToOneRule struct {
 }
 
 func (r *DiscountOneToOneRule) GetDiscountProducts(products []model.Product) []model.Product {
-
+	r.Counter.Set(0)
 	for i := range products {
 		if products[i].SKU() == r.FromSKU {
 			r.Counter.Inc()
@@ -40,5 +40,5 @@ func (r *DiscountOneToOneRule) GetDiscountProducts(products []model.Product) []m
 }
 
 func (r DiscountOneToOneRule) String() string {
-	return fmt.Sprintf("for every one [%s] product set price %s to one [%s] product", r.FromSKU, model.ToDollars(r.ToPrice), r.ToSKU)
+	return fmt.Sprintf("for every one [%s] product set price %s to one [%s] product", r.FromSKU, model.DollarsString(r.ToPrice), r.ToSKU)
 }

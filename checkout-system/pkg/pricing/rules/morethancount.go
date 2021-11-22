@@ -18,7 +18,7 @@ type DiscountMoreThanCountRule struct {
 }
 
 func (r *DiscountMoreThanCountRule) GetDiscountProducts(products []model.Product) []model.Product {
-
+	r.Counter.Set(0)
 	for i := range products {
 		if products[i].SKU() == r.FromSKU {
 			r.Counter.Inc()
@@ -35,5 +35,5 @@ func (r *DiscountMoreThanCountRule) GetDiscountProducts(products []model.Product
 }
 
 func (r DiscountMoreThanCountRule) String() string {
-	return fmt.Sprintf("if [%s] products count more than %d, set %s to all [%s] products", r.FromSKU, r.MoreThanCount, model.ToDollars(r.ToPrice), r.ToSKU)
+	return fmt.Sprintf("if [%s] products count more than %d, set %s to all [%s] products", r.FromSKU, r.MoreThanCount, model.DollarsString(r.ToPrice), r.ToSKU)
 }
