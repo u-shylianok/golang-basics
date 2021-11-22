@@ -1,6 +1,8 @@
 package rules
 
 import (
+	"fmt"
+
 	"github.com/u-shylianok/golang-basics/checkout-system/pkg/counter"
 	"github.com/u-shylianok/golang-basics/checkout-system/pkg/model"
 )
@@ -35,4 +37,8 @@ func (r *DiscountOneToOneRule) GetDiscountProducts(products []model.Product) []m
 		}
 	}
 	return products
+}
+
+func (r DiscountOneToOneRule) String() string {
+	return fmt.Sprintf("for every one [%s] product set price %s to one [%s] product", r.FromSKU, model.ToDollars(r.ToPrice), r.ToSKU)
 }

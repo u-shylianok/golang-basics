@@ -1,6 +1,8 @@
 package rules
 
 import (
+	"fmt"
+
 	"github.com/u-shylianok/golang-basics/checkout-system/pkg/counter"
 	"github.com/u-shylianok/golang-basics/checkout-system/pkg/model"
 )
@@ -25,4 +27,8 @@ func (r *DiscountEveryMaxCountRule) GetDiscountProducts(products []model.Product
 		}
 	}
 	return products
+}
+
+func (r DiscountEveryMaxCountRule) String() string {
+	return fmt.Sprintf("every (i == %d) product [%s] set new price = %s", r.MaxCount, r.FromSKU, model.ToDollars(r.ToPrice))
 }

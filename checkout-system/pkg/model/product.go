@@ -49,6 +49,10 @@ func (p *Product) SetDiscount(newPrice int64) {
 		logrus.Info("trying to set a lower discount - skip")
 		return
 	}
+	logrus.WithFields(logrus.Fields{
+		"total":    ToDollars(newPrice),
+		"discount": ToDollars(-discount),
+	}).Info("discount set successfully")
 	p.discount = discount
 	p.total = newPrice
 }
@@ -58,16 +62,16 @@ func (p *Product) Total() int64 {
 }
 
 func (p Product) String() string {
-	price := dollarString(p.price)
-	total := dollarString(p.Total())
+	price := ToDollars(p.price)
+	total := ToDollars(p.Total())
 	if p.discount == 0 {
 		return fmt.Sprintf("\nProduct: %s\nSKU: [%s]\nPrice: %s\nTotal: %s", p.name, p.sku, price, total)
 	}
 
-	discount := dollarString(p.discount)
+	discount := ToDollars(p.discount)
 	return fmt.Sprintf("\nProduct: %s\nSKU: %s\nPrice: %s\nDiscount: -%s\nTotal: %s", p.name, p.sku, price, discount, total)
 }
 
-func dollarString(price int64) string {
+func ToDollars(price int64) string {
 	return fmt.Sprintf("%.2f$", float64(price)/100)
 }

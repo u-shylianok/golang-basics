@@ -34,19 +34,21 @@ func (c *Checkout) Scan(SKU string) error {
 		logrus.WithError(err).Error("failed to get product from catalog")
 		return err
 	}
-	logrus.WithField("SKU", product.SKU).Info("product scanned")
+	logrus.WithField("product", product).Info("product scanned")
 
 	c.Products = append(c.Products, product)
 	return nil
 }
 
 func (c *Checkout) Total() (int64, error) {
-	fmt.Println("TOTAL:")
 
+	logrus.Info("trying to set discounts from pricing rules")
 	for _, rule := range c.PricingRules {
+		logrus.WithField("rule", rule).Info("pricing rule")
 		c.Products = rule.GetDiscountProducts(c.Products)
 	}
 
+	fmt.Println("TOTAL:")
 	var total int64
 	for _, product := range c.Products {
 		total += product.Total()

@@ -1,6 +1,8 @@
 package rules
 
 import (
+	"fmt"
+
 	"github.com/u-shylianok/golang-basics/checkout-system/pkg/counter"
 	"github.com/u-shylianok/golang-basics/checkout-system/pkg/model"
 )
@@ -30,4 +32,8 @@ func (r *DiscountMoreThanCountRule) GetDiscountProducts(products []model.Product
 		}
 	}
 	return products
+}
+
+func (r DiscountMoreThanCountRule) String() string {
+	return fmt.Sprintf("if [%s] products count more than %d, set %s to all [%s] products", r.FromSKU, r.MoreThanCount, model.ToDollars(r.ToPrice), r.ToSKU)
 }
