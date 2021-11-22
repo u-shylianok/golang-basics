@@ -7,24 +7,41 @@ import (
 )
 
 type Product struct {
-	SKU      string `json:"SKU"`
-	Name     string `json:"name"`
-	Price    int64  `json:"price"`
+	sku      string
+	name     string
+	price    int64
 	discount int64
 	total    int64
 }
 
 func NewProduct(sku, name string, price int64) Product {
 	return Product{
-		SKU:   sku,
-		Name:  name,
-		Price: price,
+		sku:   sku,
+		name:  name,
+		price: price,
+		total: price,
 	}
 }
 
+func (p *Product) SKU() string {
+	return p.sku
+}
+
+func (p *Product) Name() string {
+	return p.name
+}
+
+func (p *Product) Price() int64 {
+	return p.price
+}
+
+func (p *Product) Discount() int64 {
+	return p.discount
+}
+
 func (p *Product) SetDiscount(newPrice int64) {
-	discount := p.Price - newPrice
-	if discount <= 0 || discount > p.Price {
+	discount := p.price - newPrice
+	if discount <= 0 || discount > p.price {
 		logrus.Info("trying to set an unreal discount - skip")
 		return
 	}
@@ -36,22 +53,19 @@ func (p *Product) SetDiscount(newPrice int64) {
 	p.total = newPrice
 }
 
-func (p *Product) GetTotalPrice() int64 {
-	if p.discount == 0 {
-		return p.Price
-	}
+func (p *Product) Total() int64 {
 	return p.total
 }
 
 func (p Product) String() string {
-	price := dollarString(p.Price)
-	total := dollarString(p.GetTotalPrice())
+	price := dollarString(p.price)
+	total := dollarString(p.Total())
 	if p.discount == 0 {
-		return fmt.Sprintf("\nProduct: %s\nSKU: [%s]\nPrice: %s\nTotal: %s", p.Name, p.SKU, price, total)
+		return fmt.Sprintf("\nProduct: %s\nSKU: [%s]\nPrice: %s\nTotal: %s", p.name, p.sku, price, total)
 	}
 
 	discount := dollarString(p.discount)
-	return fmt.Sprintf("\nProduct: %s\nSKU: %s\nPrice: %s\nDiscount: -%s\nTotal: %s", p.Name, p.SKU, price, discount, total)
+	return fmt.Sprintf("\nProduct: %s\nSKU: %s\nPrice: %s\nDiscount: -%s\nTotal: %s", p.name, p.sku, price, discount, total)
 }
 
 func dollarString(price int64) string {

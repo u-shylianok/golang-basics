@@ -18,13 +18,13 @@ type DiscountMoreThanCountRule struct {
 func (r *DiscountMoreThanCountRule) GetDiscountProducts(products []model.Product) []model.Product {
 
 	for i := range products {
-		if products[i].SKU == r.FromSKU {
+		if products[i].SKU() == r.FromSKU {
 			r.Counter.Inc()
 		}
 	}
 	if r.Counter.Get() > r.MoreThanCount {
 		for i := range products {
-			if products[i].SKU == r.ToSKU {
+			if products[i].SKU() == r.ToSKU {
 				products[i].SetDiscount(r.ToPrice)
 			}
 		}

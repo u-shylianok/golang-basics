@@ -19,7 +19,11 @@ func LoadCatalog(path string) (Catalog, error) {
 		return Catalog{}, err
 	}
 
-	var products []Product
+	var products []struct {
+		SKU   string `json:"SKU"`
+		Name  string `json:"name"`
+		Price int64  `json:"price"`
+	}
 
 	if err := json.Unmarshal(bytes, &products); err != nil {
 		logrus.WithError(err).Error("failed to unmarshal products from json")
@@ -28,7 +32,7 @@ func LoadCatalog(path string) (Catalog, error) {
 
 	productsMap := make(map[string]Product)
 	for _, product := range products {
-		productsMap[product.SKU] = product
+		productsMap[product.SKU] = NewProduct(product.SKU, product.Name, product.Price)
 	}
 	return Catalog{productsMap}, nil
 }
@@ -36,26 +40,10 @@ func LoadCatalog(path string) (Catalog, error) {
 func GetDefaultCatalog() Catalog {
 	return Catalog{
 		products: map[string]Product{
-			"ipd": {
-				SKU:   "ipd",
-				Name:  "Super iPad",
-				Price: 54999,
-			},
-			"mbp": {
-				SKU:   "mbp",
-				Name:  "MacBook Pro",
-				Price: 139999,
-			},
-			"atv": {
-				SKU:   "atv",
-				Name:  "Apple TV",
-				Price: 10950,
-			},
-			"vga": {
-				SKU:   "vga",
-				Name:  "VGA adapter",
-				Price: 3000,
-			},
+			"ipd": NewProduct("ipd", "Super iPad", 54999),
+			"mbp": NewProduct("mbp", "MacBook Pro", 139999),
+			"atv": NewProduct("atv", "Apple TV", 10950),
+			"vga": NewProduct("vga", "VGA adapter", 3000),
 		},
 	}
 }

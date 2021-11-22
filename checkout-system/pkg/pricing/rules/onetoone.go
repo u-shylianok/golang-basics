@@ -16,7 +16,7 @@ type DiscountOneToOneRule struct {
 func (r *DiscountOneToOneRule) GetDiscountProducts(products []model.Product) []model.Product {
 
 	for i := range products {
-		if products[i].SKU == r.FromSKU {
+		if products[i].SKU() == r.FromSKU {
 			r.Counter.Inc()
 		}
 	}
@@ -29,7 +29,7 @@ func (r *DiscountOneToOneRule) GetDiscountProducts(products []model.Product) []m
 			break
 		}
 
-		if products[i].SKU == r.ToSKU {
+		if products[i].SKU() == r.ToSKU {
 			products[i].SetDiscount(r.ToPrice)
 			r.Counter.Dec()
 		}

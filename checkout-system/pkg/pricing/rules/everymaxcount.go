@@ -16,7 +16,7 @@ type DiscountEveryMaxCountRule struct {
 func (r *DiscountEveryMaxCountRule) GetDiscountProducts(products []model.Product) []model.Product {
 
 	for i := range products {
-		if products[i].SKU == r.FromSKU {
+		if products[i].SKU() == r.FromSKU {
 			r.Counter.Inc()
 			if r.MaxCount == r.Counter.Get() {
 				r.Counter.Set(0)

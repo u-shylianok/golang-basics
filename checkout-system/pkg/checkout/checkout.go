@@ -49,7 +49,7 @@ func (c *Checkout) Total() (int64, error) {
 
 	var total int64
 	for _, product := range c.Products {
-		total += product.GetTotalPrice()
+		total += product.Total()
 		fmt.Println(product)
 	}
 	return total, nil
