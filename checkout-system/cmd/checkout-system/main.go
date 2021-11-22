@@ -40,38 +40,53 @@ func main() {
 	pricingRules := rules.GetDefaultRules()
 
 	{
-		fmt.Println("\n ---------- start test 1 ---------- ")
-		co := checkout.NewCheckout(catalog, pricingRules)
 		SKUs := []string{"atv", "atv", "atv", "vga"}
-		for _, sku := range SKUs {
-			co.Scan(sku)
-			fmt.Printf("product [%s] scanned\n", sku)
-		}
-		co.Total()
-		fmt.Println(" ---------- end test 1 ---------- ")
+		CheckoutTest(2, SKUs, catalog, pricingRules)
 	}
 	{
-		fmt.Println("\n ---------- start test 2 ---------- ")
-		co := checkout.NewCheckout(catalog, pricingRules)
 		SKUs := []string{"atv", "ipd", "ipd", "atv", "ipd", "ipd", "ipd"}
-		for _, sku := range SKUs {
-			co.Scan(sku)
-			fmt.Printf("product [%s] scanned\n", sku)
-		}
-		co.Total()
-		fmt.Println(" ---------- end test 2 ---------- ")
+		CheckoutTest(2, SKUs, catalog, pricingRules)
 	}
 	{
-		fmt.Println("\n ---------- start test 3 ---------- ")
-		co := checkout.NewCheckout(catalog, pricingRules)
 		SKUs := []string{"mbp", "vga", "ipd"}
-		for _, sku := range SKUs {
-			co.Scan(sku)
-			fmt.Printf("product [%s] scanned\n", sku)
-		}
-		co.Total()
-		fmt.Println(" ---------- end test 3 ---------- ")
+		CheckoutTest(3, SKUs, catalog, pricingRules)
+	}
+	{
+		SKUs := []string{"vga", "vga", "vga", "mbp", "mbp", "ipd"}
+		CheckoutTest(4, SKUs, catalog, pricingRules)
+	}
+	{
+		SKUs := []string{"ipd", "vga", "mbp", "vga", "vga", "mbp"}
+		CheckoutTest(5, SKUs, catalog, pricingRules)
+	}
+	{
+		SKUs := []string{"ipd", "atv", "vga", "ipd", "mbp", "ipd", "vga", "ipd", "vga", "ipd", "mbp", "atv", "atv", "atv", "ipd"}
+		CheckoutTest(6, SKUs, catalog, pricingRules)
+	}
+	{
+		SKUs := []string{"atv", "atv", "atv", "atv", "atv", "atv", "atv", "atv", "atv", "atv"}
+		CheckoutTest(7, SKUs, catalog, pricingRules)
+	}
+	{
+		SKUs := []string{"ipd", "ipd", "ipd", "ipd"}
+		CheckoutTest(8, SKUs, catalog, pricingRules)
+	}
+	{
+		SKUs := []string{"ipd", "ipd", "ipd", "ipd", "ipd"}
+		CheckoutTest(9, SKUs, catalog, pricingRules)
 	}
 
 	fmt.Println("application closed")
+}
+
+func CheckoutTest(testNum int, SKUs []string, catalog model.Catalog, pricingRules []rules.DiscountRuler) {
+
+	fmt.Printf("\n ---------- start test %d ---------- \n", testNum)
+	co := checkout.NewCheckout(catalog, pricingRules)
+	for _, sku := range SKUs {
+		co.Scan(sku)
+		fmt.Printf("product [%s] scanned\n", sku)
+	}
+	co.Total()
+	fmt.Printf(" ---------- end test %d ---------- \n", testNum)
 }
