@@ -8,3 +8,4 @@ Golang Basics course tasks
 - [X] task03
 - [X] checkout-system
 - [X] doubly-linked-list
+- [X] bst-extended
