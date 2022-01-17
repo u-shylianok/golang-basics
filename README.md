@@ -9,3 +9,4 @@ Golang Basics course tasks
 - [X] checkout-system
 - [X] doubly-linked-list
 - [X] bst-extended
+- [X] channels
