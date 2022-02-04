@@ -7,7 +7,9 @@ import (
 func main() {
 	ch1 := make(chan int)
 	ch2 := make(chan int)
-	go numsGenerator(ch1, 10)
+
+	numsToGenerate := 10
+	go numsGenerator(ch1, numsToGenerate)
 	go numsMultiplier(ch1, ch2)
 
 	for num := range ch2 {
