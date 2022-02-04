@@ -12,4 +12,4 @@ Golang Basics course tasks
 - [X] channels
 - [X] concurrency01
 - [X] concurrency02
-- [ ] concurrency03
+- [X] concurrency03
