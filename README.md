@@ -10,3 +10,6 @@ Golang Basics course tasks
 - [X] doubly-linked-list
 - [X] bst-extended
 - [X] channels
+- [X] concurrency01
+- [X] concurrency02
+- [X] concurrency03
