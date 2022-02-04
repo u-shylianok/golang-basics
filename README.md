@@ -11,5 +11,5 @@ Golang Basics course tasks
 - [X] bst-extended
 - [X] channels
 - [X] concurrency01
-- [ ] concurrency02
+- [X] concurrency02
 - [ ] concurrency03
