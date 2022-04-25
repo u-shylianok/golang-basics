@@ -1,2 +1,2 @@
-FROM postgres:alpine AS db-auth
+FROM postgres:alpine AS db-library
 EXPOSE 5432
