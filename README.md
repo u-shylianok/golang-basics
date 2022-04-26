@@ -13,3 +13,4 @@ Golang Basics course tasks
 - [X] concurrency01
 - [X] concurrency02
 - [X] concurrency03
+- [X] migrations

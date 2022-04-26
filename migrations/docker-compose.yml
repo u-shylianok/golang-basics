@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+  db-library:
+    build:
+      context: ./db-library
+      target: db-library
+    image: db-library:latest
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    container_name: db-library
